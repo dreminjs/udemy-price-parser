@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { CurrencyModule } from './currency/currency.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [CurrencyModule],
+  imports: [CurrencyModule, ConfigModule.forRoot({ isGlobal: true })],
   controllers: [AppController],
   providers: [AppService],
 })

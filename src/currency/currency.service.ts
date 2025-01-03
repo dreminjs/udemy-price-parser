@@ -1,11 +1,15 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class CurrencyService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async getCurrency({
     baseCurrency,
@@ -17,7 +21,7 @@ export class CurrencyService {
     try {
       const response = await firstValueFrom(
         this.httpService.get(
-          `https://v6.exchangerate-api.com/v6/4cbc8a5f303336a657facd18/latest/${baseCurrency}`,
+          `https://v6.exchangerate-api.com/v6/${this.configService.get('API_KEY')}/latest/${baseCurrency}`,
         ),
       );
       return response.data['conversion_rates'][`${targetCurrency}`];

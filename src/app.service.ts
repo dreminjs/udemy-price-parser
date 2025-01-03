@@ -14,7 +14,6 @@ export class AppService {
   }> {
     const browser = await chromium.launch();
 
-    // Установите пользовательский агент
 
     const context = await browser.newContext({
       userAgent:
@@ -23,7 +22,6 @@ export class AppService {
 
     const page = await context.newPage();
 
-    // Перейдите на страницу и подождите
     await page.goto(
       `https://www.udemy.com/course/${courseName}/?couponCode=NEWYEARCAREER`,
       { waitUntil: 'networkidle' },
